@@ -2,7 +2,7 @@ import request from '@/plugin/axios.js'
 // 登录
 const login = (data = {}) => {
   return request({
-    url: '/api/login',
+    url: '/login',  // 如果 baseURL 已包含 /api，这里就不需要再加 /api
     // url: `/api/users/xiaohu`,
     method: 'post',
     data
@@ -11,7 +11,7 @@ const login = (data = {}) => {
 // 获取用户信息
 const getUser = (params = {}) => {
   return request({
-    url: '/api/getUser',
+    url: '/getUser',
     method: 'get',
     params
   })
@@ -19,7 +19,7 @@ const getUser = (params = {}) => {
 // 登出
 const logout = (data = {}) => {
   return request({
-    url: '/api/logout',
+    url: '/logout',
     method: 'post',
     data
   })
