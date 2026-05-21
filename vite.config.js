@@ -26,13 +26,12 @@ export default defineConfig(({ mode }) => {
       port: env.APP_PORT ? Number(env.APP_PORT) : 5173,
       https: false,
       proxy: {
-        // 配置请求代理 - 代理所有 API 请求
-        '/api': {
+        // 配置请求代理
+        '^/(login|getUser|logout|products)': {
           target: env.VITE_API_URL || 'http://127.0.0.1:8000', // 后端服务实际地址
           changeOrigin: true, // 是否允许跨域
           secure: false, // 如果是 https 接口，需要配置这个参数
           ws: true, // 支持 websocket
-          rewrite: (path) => path.replace(/^\/api/, '') // ⭐ 关键：去掉 /api 前缀
         }
       }
     },

@@ -15,12 +15,23 @@ const router = createRouter({
     { path: '/ruleTrace', name: 'ruleTrace', component: () => import('@/page/RuleTraceView.vue'), meta: { title: '规则应用路径' } },
     { path: '/login', name: 'login', component: () => import('@/page/login.vue'), meta: { title: '登录' } },
     { path: '/dataScreen', name: 'dataScreen', component: () => import('@/page/DataScreen.vue'), meta: { title: '数字大屏' } },
+    // 捕获所有未匹配的路由，重定向到登录页
+    { path: '/:pathMatch(.*)*', redirect: '/login' },
   ],
 })
 
 // 拦截路由
 router.beforeEach((to, from, next) => {
   const userStore = getStore('useUserStore')
+
+  // 判断路由是否匹配（排除重定向路由）
+  const isMatched = to.matched.length > 0
+  
+  // 如果路由未匹配，直接跳转到登录页
+  if (!isMatched && to.path !== '/login') {
+    next('/login')
+    return
+  }
 
   // 判断用户是否登录
   if (userStore.token) {

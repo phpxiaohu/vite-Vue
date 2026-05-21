@@ -2,7 +2,7 @@ import request from '@/plugin/axios.js'
 // 登录
 const login = (data = {}) => {
   return request({
-    url: '/api/login',  // Vite 代理会自动去掉 /api 前缀转发到后端
+    url: '/login',  // 简洁路径，Vite 代理会自动添加 /api 前缀
     method: 'post',
     data
   })
@@ -10,7 +10,7 @@ const login = (data = {}) => {
 // 获取用户信息
 const getUser = (params = {}) => {
   return request({
-    url: '/api/getUser',
+    url: '/getUser',
     method: 'get',
     params
   })
@@ -18,7 +18,7 @@ const getUser = (params = {}) => {
 // 登出
 const logout = (data = {}) => {
   return request({
-    url: '/api/logout',
+    url: '/logout',
     method: 'post',
     data
   })
