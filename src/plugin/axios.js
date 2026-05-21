@@ -114,8 +114,9 @@ service.interceptors.response.use(
 
     // 处理网络错误
     if (error.response) {
+      const { status, data } = error.response
       // 服务器返回了错误状态码
-      switch (error.response.status) {
+      switch (status) {
         case 401:
           error.response.message = '🚨 未授权，请重新登录'
           sessionStorage.removeItem('token')
@@ -132,7 +133,8 @@ service.interceptors.response.use(
           error.response.message = '🚨 服务器内部错误'
           break
         default:
-          console.error(`🚨 错误:${error.response.status}`)
+          error.response.message = `🚨 ${data.message}`
+          console.error(`🚨 错误:${error.response.data}`)
       }
     } else if (error.request) {
       // 网络错误
