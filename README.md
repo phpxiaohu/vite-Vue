@@ -2,17 +2,16 @@
 
 ### 开发环境 (.env.development)
 - `VITE_APP_TITLE`: Vite-vue Dev
-- `VITE_API_BASE_URL`: https://api.github.com
+- `VITE_API_URL`: https://api.github.com
 
 ### 生产环境 (.env.production)
 - `VITE_APP_TITLE`: Vite-vue Prod
-- `VITE_API_BASE_URL`: https://api.github.com
+- `VITE_API_URL`: https://api.github.com
 
 ### Vite 配置亮点
 - 支持 HTTPS 开发（basic-ssl 插件）
 - 自动获取本地 IP 地址
 - 路径别名配置（`@` 指向 `src` 目录）
-- API 代理配置（`/api` 转发到后端服务）
 - 根据环境变量动态设置端口
 
 ## 🎨 UI 特性
