@@ -2,7 +2,15 @@ import request from '@/plugin/axios.js'
 // 登录
 const login = (data = {}) => {
   return request({
-    url: '/login',  // 简洁路径，Vite 代理会自动添加 /api 前缀
+    url: '/login',
+    method: 'post',
+    data
+  })
+}
+// 注册
+const register = (data = {}) => {
+  return request({
+    url: '/register',
     method: 'post',
     data
   })
@@ -24,4 +32,4 @@ const logout = (data = {}) => {
   })
 }
 
-export { login, getUser, logout }
+export { login, register, getUser, logout }
