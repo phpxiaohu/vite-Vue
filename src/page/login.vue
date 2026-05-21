@@ -45,7 +45,7 @@
         <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
         <button type="submit">{{ isRegisterMode ? '注册' : '登录' }}</button>
-        <el-button type="text" class="register" @click="toggleMode">{{ isRegisterMode ? '已有账号？去登录' : '没有账号？去注册' }}</el-button>
+        <a class="register" @click="toggleMode">{{ isRegisterMode ? '已有账号？去登录' : '没有账号？去注册' }}</a>
       </form>
     </div>
   </div>

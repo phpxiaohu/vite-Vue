@@ -9,7 +9,7 @@
       <Footer/>
     </div>
   </template>
-  <RouterView v-else-if="route.name === 'login'"/>
+  <RouterView v-else/>
 </template>
 
 <script setup>

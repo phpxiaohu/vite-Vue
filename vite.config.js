@@ -26,12 +26,19 @@ export default defineConfig(({ mode }) => {
       port: env.APP_PORT ? Number(env.APP_PORT) : 5173,
       https: false,
       proxy: {
-        // 配置请求代理
+        // 配置请求代理 - 只代理 AJAX 请求（通过请求头判断）
         '^/(login|getUser|logout|products)': {
           target: env.VITE_API_URL || 'http://127.0.0.1:8000', // 后端服务实际地址
           changeOrigin: true, // 是否允许跨域
           secure: false, // 如果是 https 接口，需要配置这个参数
           ws: true, // 支持 websocket
+          // 关键：只有当请求头包含 X-Requested-With 时才代理（即 AJAX 请求）
+          bypass: function(req, res, proxyOptions) {
+            // 如果不是 AJAX 请求（没有 X-Requested-With 头），则不代理，让 Vite 处理为前端路由
+            if (!req.headers['x-requested-with'] || req.headers['x-requested-with'].toLowerCase() !== 'xmlhttprequest') {
+              return false // 返回 false 表示不进行代理
+            }
+          }
         }
       }
     },
