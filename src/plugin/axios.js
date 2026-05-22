@@ -42,11 +42,10 @@ const addPendingRequest = (config = {}) => {
 const service = axios.create({
   // 开发环境：使用空 baseURL，请求走相对路径，由 Vite 代理处理
   // 生产环境：使用完整的 API URL
-  baseURL: import.meta.env.DEV ? '' : (import.meta.env.VITE_API_URL || 'https://api.example.com'),
+  baseURL: import.meta.env.DEV ? '/vite' : (`${import.meta.env.VITE_API_URL}/vite` || 'https://api.example.com'),
   timeout: 15000, // 请求超时时间
   headers: {
-    'Content-Type': 'application/json; charset=utf-8',
-    'X-Requested-With': 'XMLHttpRequest' // 标识这是 AJAX 请求
+    'Content-Type': 'application/json; charset=utf-8'
   }
 })
 

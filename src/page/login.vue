@@ -55,7 +55,6 @@
 import { inject, reactive, ref } from 'vue'
 import { getStore } from '@/stores'
 import { login, register } from '@/api/user.js'
-defineOptions({ name: 'user' })
 
 const redirectTo = inject('redirectTo')
 const { setUserInfo, setToken } = getStore('useUserStore')
@@ -156,6 +155,7 @@ const handleSubmit = async () => {
     if (isRegisterMode.value) {
       // 注册逻辑
       response = await register({
+        username: formData.username,
         email: formData.email,
         password: formData.password,
         confirmed: formData.confirmed

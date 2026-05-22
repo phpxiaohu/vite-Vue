@@ -34,7 +34,6 @@
 </template>
 
 <script setup>
-defineOptions({ name: 'HelloWorld' })
 import {
   inject, ref, readonly,
   shallowRef, triggerRef, shallowReadonly,
