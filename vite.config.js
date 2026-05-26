@@ -14,10 +14,10 @@ function injectCDNPlugin() {
     name: 'inject-cdn',
     transformIndexHtml(html, ctx) { // 只在生产构建时注入 CDN
       if (ctx.bundle) {
-        const cdnScripts = `<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.22/vue.global.min.js" integrity="sha512-9pgCGZQFu7n9zOnAzjxPAWt6Fv23ZyzXUK4wul+72qKUIb9lq5ljNRQaXg/qR7PbXyh0nVuNtg/FwmBtPPqLPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.6.4/vue-router.global.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/pinia/3.0.4/pinia.iife.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.15.0/axios.min.js"></script>`
+        const cdnScripts = `<script src="https://cdn.jsdelivr.net/npm/vue@3.5.31/dist/vue.global.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/vue-router@4.6.4/dist/vue-router.global.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/pinia@3.0.4/dist/pinia.iife.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/axios@1.16.1/dist/axios.min.js"></script>`
         // 在 #app div 之后插入 CDN 脚本
         return html.replace('<div id="app" class="flexitem"></div>', `<div id="app" class="flexitem"></div>${cdnScripts}`)
       }
