@@ -46,7 +46,7 @@ const handleTheme = () => {
 const handleLogout = () => {
   logout().then(() => {
     clearUserInfo()
-    redirectTo('/login')
+    redirectTo('/logins')
   })
 }
 </script>
