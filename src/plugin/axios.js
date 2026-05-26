@@ -121,7 +121,7 @@ service.interceptors.response.use(
           error.response.message = '🚨 未授权，请重新登录'
           sessionStorage.removeItem('token')
           CookieStorage.remove('token')
-          window.location.href = '/login'
+          window.location.href = '/logins'
           break
         case 403:
           error.response.message = '🚨 拒绝访问'
