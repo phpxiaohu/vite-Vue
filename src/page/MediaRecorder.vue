@@ -131,7 +131,7 @@ const downloadBlob = () => {
   const url = URL.createObjectURL(audioBlob.value)
   const a = document.createElement('a')
   a.href = url
-  a.download = `${userInfo.name}-${new Date().getTime()}.mp3`
+  a.download = `${userInfo.value.name}-${new Date().getTime()}.mp3`
   a.click()
 
   requestIdleCallback(() => {

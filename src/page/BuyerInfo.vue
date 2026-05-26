@@ -185,9 +185,7 @@ onUnmounted(() => {
 
 <style scoped>
 .buyer-info {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
+  padding: 10px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

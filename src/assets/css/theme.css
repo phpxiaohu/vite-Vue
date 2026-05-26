@@ -1,17 +1,17 @@
 :root {
   .default {
     --xh-bg-color: #3384ee;
-    --xh-bg-hover-color: #406fac;
-    --xh-text-color: #e79ed6;
+    --xh-bg-hover-color: #9ccaf8;
+    --xh-text-color: #504a4a;
   }
   .green {
     --xh-bg-color: #73c448;
-    --xh-bg-hover-color: #72a159;
-    --xh-text-color: #9e9d9d;
+    --xh-bg-hover-color: #b4f6a4;
+    --xh-text-color: #aa44fd;
   }
   .glory {
     --xh-bg-color: #dbae58;
-    --xh-bg-hover-color: #a38854;
+    --xh-bg-hover-color: #f6d596;
     --xh-text-color: #6ec4ab;
   }
 }

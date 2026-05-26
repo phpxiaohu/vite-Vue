@@ -172,7 +172,7 @@ onUnmounted(() => {
   font-size: 18px;
   font-weight: bold;
   margin: 0 0 10px 0;
-  color: #333;
+  color: var(--xh-text-color);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -180,7 +180,7 @@ onUnmounted(() => {
 
 .product-description {
   font-size: 14px;
-  color: #666;
+  color: var(--xh-text-color);
   margin: 0 0 15px 0;
   height: 40px;
   overflow: hidden;

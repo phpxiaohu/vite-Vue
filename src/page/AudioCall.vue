@@ -282,7 +282,7 @@ const sendMessage = (message) => {
 }
 // 获取当前用户 ID
 const getCurrentUserId = () => {
-  const { node_id } = userInfo
+  const { node_id } = userInfo.value
   return node_id
 }
 // 发起通话

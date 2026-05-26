@@ -15,6 +15,7 @@ const router = createRouter({
     { path: '/ruleTrace', name: 'ruleTrace', component: () => import('@/page/RuleTraceView.vue'), meta: { title: '规则应用路径' } },
     { path: '/logins', name: 'logins', component: () => import('@/page/login.vue'), meta: { title: '登录' } },
     { path: '/dataScreen', name: 'dataScreen', component: () => import('@/page/DataScreen.vue'), meta: { title: '数字大屏' } },
+    { path: '/errorLog', name: 'errorLog', component: () => import('@/page/ErrorLog.vue'), meta: { title: '错误日志监控' } },
     // 捕获所有未匹配的路由，重定向到登录页
     { path: '/:pathMatch(.*)*', redirect: '/logins' },
   ],

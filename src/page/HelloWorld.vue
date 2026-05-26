@@ -105,8 +105,8 @@ onMounted(() => {
   initial-value: #ad92ff;
 }
 .property {
-  //width: 100px;
-  //height: 100px;
+  /*width: 100px;
+  height: 100px;*/
   background: linear-gradient(#fff, var(--gradient));
   transition: --gradient 2s;
   &:hover {

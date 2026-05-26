@@ -26,7 +26,8 @@ export const getStore = (storeName) => {
     get(target, key, receiver) {
       // 如果 key 在 refs 中（state 或 getter），返回解包后的值
       if (key in target) {
-        return unref(target[key])
+        return target[key] // ✅ 不解除 Ref，保持响应式
+        // return unref(target[key]) // 解包 Ref，返回普通值
       }
       // 如果 key 不在 refs 中（如 actions/methods），从 store 上获取
       const storeValue = Reflect.get(store, key, receiver)

@@ -44,8 +44,8 @@ function addItemToCart() {
 function clearCart() {
   const confirmed = confirm('确认清空购物车吗?');
   if (confirmed) {
-    console.log(cartStore.itemList)
-    cartStore.rawItem = []
+    console.log(cartStore.itemList.value)
+    cartStore.clearItem()
   }
   // 监测文件是否更新
   fetch(location.origin, { method: 'HEAD', cache: 'no-store' }).then(res => {

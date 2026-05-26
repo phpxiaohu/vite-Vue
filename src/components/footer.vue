@@ -1,9 +1,13 @@
 <template>
-  <footer class="flex shrink center footer">| footer |</footer>
+  <footer class="flex shrink center footer">{{ userInfo.username }} | footer |</footer>
 </template>
 
 <script setup>
-defineOptions({ name: 'Footer' })
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
+const { userInfo } = storeToRefs(userStore) // 保持响应式
 </script>
 
 <style scoped>

@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-defineOptions({ name: 'Aside' })
 import { computed, ref } from 'vue'
 
 const isAsideCollapsed = ref(false)

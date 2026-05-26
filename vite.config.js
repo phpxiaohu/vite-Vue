@@ -8,13 +8,31 @@ import { networkInterfaces, type } from 'os';
 const interfaces = networkInterfaces(), key = { Darwin: 'en0', Windows_NT: 'Ethernet' }[type()]
 const mac = interfaces[key]?.find(item => item.family === 'IPv4')?.mac || '00:00:00:00:00:00'
 
+// 自定义插件：在生产构建时向 index.html 注入 CDN 脚本
+function injectCDNPlugin() {
+  return {
+    name: 'inject-cdn',
+    transformIndexHtml(html, ctx) { // 只在生产构建时注入 CDN
+      if (ctx.bundle) {
+        const cdnScripts = `<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.5.22/vue.global.min.js" integrity="sha512-9pgCGZQFu7n9zOnAzjxPAWt6Fv23ZyzXUK4wul+72qKUIb9lq5ljNRQaXg/qR7PbXyh0nVuNtg/FwmBtPPqLPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.6.4/vue-router.global.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/pinia/3.0.4/pinia.iife.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.15.0/axios.min.js"></script>`
+        // 在 #app div 之后插入 CDN 脚本
+        return html.replace('<div id="app" class="flexitem"></div>', `<div id="app" class="flexitem"></div>${cdnScripts}`)
+      }
+      return html
+    }
+  }
+}
+
 // https://cn.vite.dev/config/
 // mode: 'development' | 'production' | 'test'
 export default defineConfig(({ mode }) => {
   // 根据当前工作目录中的 `mode` 加载 .env 文件 设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    plugins: [vue(), basicSsl()],
+    plugins: [vue(), basicSsl(), injectCDNPlugin()],
     // base:loadEnv(mode, process.cwd()).VITE_APP_NAME,
     publicDir: 'public',
     define: {
@@ -38,6 +56,26 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src')
+      }
+    },
+    build: {
+      // 调整 chunk size 警告限制，默认是 500kb
+      chunkSizeWarningLimit: 1000, // 设置为 1000kb (1MB)
+      // 启用 source map
+      sourcemap: mode === 'production' ? 'hidden' : true,
+      rollupOptions: {
+        // 外部化依赖，不打包进 bundle
+        external: ['vue', 'vue-router', 'pinia', 'axios'],
+        output: {
+          globals: { // 为外部依赖提供全局变量名
+            vue: 'Vue',
+            'vue-router': 'VueRouter',
+            pinia: 'Pinia',
+            axios: 'axios'
+          },
+          // 为 chunk 文件生成 source map
+          sourcemap: mode === 'production' ? 'hidden' : true
+        }
       }
     }
   }
