@@ -15,6 +15,7 @@ function injectCDNPlugin() {
     transformIndexHtml(html, ctx) { // 只在生产构建时注入 CDN
       if (ctx.bundle) {
         const cdnScripts = `<script src="https://cdn.jsdelivr.net/npm/vue@3.5.31/dist/vue.global.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/vue-demi@0.14.3/lib/index.iife.min.js"></script> <!-- pinia 源码中引入了 vue-demi 这个包 -->
           <script src="https://cdn.jsdelivr.net/npm/vue-router@4.6.4/dist/vue-router.global.min.js"></script>
           <script src="https://cdn.jsdelivr.net/npm/pinia@3.0.4/dist/pinia.iife.min.js"></script>
           <script src="https://cdn.jsdelivr.net/npm/axios@1.16.1/dist/axios.min.js"></script>`
@@ -65,10 +66,11 @@ export default defineConfig(({ mode }) => {
       sourcemap: mode === 'production' ? 'hidden' : true,
       rollupOptions: {
         // 外部化依赖，不打包进 bundle
-        external: ['vue', 'vue-router', 'pinia', 'axios'],
+        external: ['vue', 'vue-demi', 'vue-router', 'pinia', 'axios'],
         output: {
           globals: { // 为外部依赖提供全局变量名
             vue: 'Vue',
+            'vue-demi': 'VueDemi',
             'vue-router': 'VueRouter',
             pinia: 'Pinia',
             axios: 'axios'
