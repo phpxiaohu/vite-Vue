@@ -8,7 +8,7 @@ import { networkInterfaces, type } from 'os';
 const interfaces = networkInterfaces(), key = { Darwin: 'en0', Windows_NT: 'Ethernet' }[type()]
 const mac = interfaces[key]?.find(item => item.family === 'IPv4')?.mac || '00:00:00:00:00:00'
 
-// 自定义插件：在生产构建时向 index.html 注入 CDN 脚本
+// 自定义插件：在生产构建时向 index.html 注入 CDN 脚本 (有问题)
 function injectCDNPlugin() {
   return {
     name: 'inject-cdn',
@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
   // 根据当前工作目录中的 `mode` 加载 .env 文件 设置第三个参数为 '' 来加载所有环境变量，而不管是否有 `VITE_` 前缀。
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    plugins: [vue(), basicSsl(), injectCDNPlugin()],
+    plugins: [vue(), basicSsl()],
     // base:loadEnv(mode, process.cwd()).VITE_APP_NAME,
     publicDir: 'public',
     define: {
@@ -63,7 +63,7 @@ export default defineConfig(({ mode }) => {
       chunkSizeWarningLimit: 1000, // 设置为 1000kb (1MB)
       // 启用 source map
       sourcemap: mode === 'production' ? 'hidden' : true,
-      rollupOptions: {
+      /*rollupOptions: {
         // 外部化依赖，不打包进 bundle
         external: ['vue', 'vue-router', 'pinia', 'axios'],
         output: {
@@ -76,7 +76,7 @@ export default defineConfig(({ mode }) => {
           // 为 chunk 文件生成 source map
           sourcemap: mode === 'production' ? 'hidden' : true
         }
-      }
+      }*/
     }
   }
 })
