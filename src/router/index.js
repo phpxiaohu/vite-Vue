@@ -35,7 +35,7 @@ router.beforeEach((to, from, next) => {
   }
 
   // 判断用户是否登录
-  if (userStore.token) {
+  if (userStore.token.value) {
     // 已登录
     if (to.path === '/logins') {
       // 访问登录页面，跳转到首页

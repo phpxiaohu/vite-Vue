@@ -13,15 +13,14 @@
 </template>
 
 <script setup>
-defineOptions({ name: 'App' })
 import { RouterView, useRoute } from 'vue-router'
-import { getStore } from '@/stores'
+import { useUserStore } from '@/stores/user'
 import Aside from '@/components/aside.vue'
 import Header from '@/components/header.vue'
 import Footer from '@/components/footer.vue'
 
 const route = useRoute()
-const userStore = getStore('useUserStore') // 创建用户 store
+const userStore = useUserStore() // 保持响应式
 
 </script>
 
