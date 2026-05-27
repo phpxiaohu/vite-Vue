@@ -4,15 +4,21 @@
     <div class="flexitemv container">
       <Header/>
       <main class="flexitemv main-body">
-        <RouterView/>
+        <RouterView v-slot="{ Component }">
+          <keep-alive :include="cachedViews">
+            <component :is="Component" />
+          </keep-alive>
+        </RouterView>
       </main>
       <Footer/>
     </div>
   </template>
+  <RouterView v-else-if="route.name === 'logins'"/>
   <RouterView v-else/>
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import Aside from '@/components/aside.vue'
@@ -22,6 +28,25 @@ import Footer from '@/components/footer.vue'
 const route = useRoute()
 const userStore = useUserStore() // 保持响应式
 
+// 维护一个持久的缓存列表
+const cachedViews = ref([])
+
+// 监听路由变化，将需要缓存的组件名添加到列表
+watch(
+  () => route.path,
+  () => {
+    const matchedRoutes = route.matched
+    matchedRoutes.forEach(r => {
+      if (r.meta?.keepAlive) {
+        const componentName = r.components?.default?.name || r.name
+        if (componentName && !cachedViews.value.includes(componentName)) {
+          cachedViews.value.push(componentName)
+        }
+      }
+    })
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>

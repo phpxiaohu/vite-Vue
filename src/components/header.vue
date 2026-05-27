@@ -1,11 +1,11 @@
 <template>
   <header class="flex shrink justify header">
     <nav>
-      <RouterLink to="/">Home</RouterLink>|
-      <RouterLink to="/imgPica">imgPica</RouterLink>|
-      <RouterLink to="/about">About</RouterLink>|
-      <RouterLink to="/positionStiky">positionStiky</RouterLink>|
-      <RouterLink to="/errorLog">errorLog</RouterLink>|
+      <RouterLink to="/"> Home</RouterLink> |
+      <RouterLink to="/imgPica">imgPica</RouterLink> |
+      <RouterLink to="/about">About</RouterLink> |
+      <RouterLink to="/positionStiky">positionStiky</RouterLink> |
+      <RouterLink to="/errorLog">errorLog</RouterLink> |
       <RouterLink to="/dataScreen">dataScreen</RouterLink>
     </nav>
     <div class="right_btn">
@@ -19,7 +19,7 @@
             :key="item"
           >{{ item }}</option>
         </select>
-      </label>
+      </label> |
       <label class="logout">
         <button @click="handleLogout">退出登陆</button>
       </label>

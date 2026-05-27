@@ -62,14 +62,39 @@ const audioSize = computed(() => {
 // 开始录音
 const startRecording = async () => {
   try {
+    // 检查浏览器是否支持 MediaRecorder
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error('您的浏览器不支持录音功能')
+    }
+
+    if (!window.MediaRecorder) {
+      throw new Error('您的浏览器不支持 MediaRecorder API')
+    }
+
     // 请求麦克风权限
     const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        sampleRate: 44100
+      },
       video: false
     })
 
+    // 检测支持的 MIME 类型
+    let mimeType = 'audio/webm'
+    if (MediaRecorder.isTypeSupported('audio/mp4')) {
+      mimeType = 'audio/mp4'
+    } else if (MediaRecorder.isTypeSupported('audio/aac')) {
+      mimeType = 'audio/aac'
+    } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+      mimeType = 'audio/webm'
+    } else {
+      console.warn('没有支持的音频格式，使用默认格式')
+    }
+
     // 创建 MediaRecorder 实例
-    mediaRecorder.value = new MediaRecorder(stream)
+    mediaRecorder.value = new MediaRecorder(stream, mimeType ? { mimeType } : {})
     audioChunks.value = []
 
     // 监听数据可用事件
@@ -81,10 +106,16 @@ const startRecording = async () => {
 
     // 监听录音停止事件
     mediaRecorder.value.onstop = () => {
-      // 将录音数据转换为 blob
+      // 将录音数据转换为 blob，使用实际录制的格式
       audioBlob.value = new Blob(audioChunks.value, {
-        type: 'audio/webm'
+        type: mediaRecorder.value.mimeType || 'audio/webm'
       })
+
+      // 释放之前的 URL
+      if (audioUrl.value) {
+        URL.revokeObjectURL(audioUrl.value)
+      }
+
       audioUrl.value = URL.createObjectURL(audioBlob.value)
       statusText.value = '录音完成'
       isRecording.value = false
@@ -99,8 +130,21 @@ const startRecording = async () => {
       }
     }
 
-    // 开始录音
-    mediaRecorder.value.start()
+    // 监听错误事件
+    mediaRecorder.value.onerror = (event) => {
+      console.error('录音错误:', event.error)
+      statusText.value = '录音出错: ' + event.error.name
+      isRecording.value = false
+
+      // 清除定时器
+      if (timer.value) {
+        clearInterval(timer.value)
+        timer.value = null
+      }
+    }
+
+    // 开始录音（每秒钟收集一次数据，提高兼容性）
+    mediaRecorder.value.start(1000)
     isRecording.value = true
     statusText.value = '录音中...'
     recordingTime.value = 0
@@ -112,7 +156,8 @@ const startRecording = async () => {
 
   } catch (error) {
     console.error('获取麦克风权限失败:', error)
-    statusText.value = '错误：无法访问麦克风'
+    statusText.value = '错误：' + (error.message || '无法访问麦克风')
+    isRecording.value = false
   }
 }
 
@@ -127,11 +172,19 @@ const stopRecording = () => {
 const downloadBlob = () => {
   if (!audioBlob.value) return
 
+  // 根据 MIME 类型确定文件扩展名
+  let extension = 'webm'
+  if (audioBlob.value.type.includes('mp4')) {
+    extension = 'mp4'
+  } else if (audioBlob.value.type.includes('aac')) {
+    extension = 'aac'
+  }
+
   // 创建下载链接
   const url = URL.createObjectURL(audioBlob.value)
   const a = document.createElement('a')
   a.href = url
-  a.download = `${userInfo.value.name}-${new Date().getTime()}.mp3`
+  a.download = `${userInfo.value.name}-${new Date().getTime()}.${extension}`
   a.click()
 
   requestIdleCallback(() => {

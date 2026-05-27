@@ -25,12 +25,11 @@
 
   <img @click="handleCalll" :src="userInfo?.avatar" class="avatar" alt="🍍用户头像">
 
-  <div @click="handleRecorder" class="shrink property">录音</div>
   <div
     @click="handleShallow"
     class="shallow"
   >{{ shallow.age }} {{ shallow.member.sister }}</div>
-  <SiblingIndex v-model.capitalize="msg"></SiblingIndex>
+  <div @click="handleRecorder" class="shrink property">录音</div>
 </template>
 
 <script setup>
@@ -41,7 +40,6 @@ import {
 } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/user'
-import SiblingIndex from '@/page/SiblingIndex.vue'
 import { getUser } from '@/api/user.js'
 const navigateTo = inject('navigateTo'); // 注入路由方法
 
@@ -60,7 +58,8 @@ const handleRecorder = () => {
 
 let num = readonly({ count })
 const handleBuyerInfo = () => {
-  navigateTo('/buyerInfo')
+  // navigateTo('/buyerInfo')
+  navigateTo('/positionStiky')
   num.count++ // readonly 不会改变
 
   shallowReadonly(num)
