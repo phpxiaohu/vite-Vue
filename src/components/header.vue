@@ -32,6 +32,7 @@ import { inject, ref, computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { getStore } from '@/stores'
 import { logout } from '@/api/user.js'
+import { MessageBox } from '@/utils/MessageBox'
 
 const redirectTo = inject('redirectTo')
 const themeStore = getStore('useThemeStore')
@@ -44,9 +45,13 @@ const handleTheme = () => {
 }
 
 const handleLogout = () => {
-  logout().then(() => {
-    clearUserInfo()
-    redirectTo('/logins')
+  MessageBox.confirm('确定退出登录吗？', '提示').then(() => {
+    logout().then(() => {
+      clearUserInfo()
+      redirectTo('/logins')
+    })
+  }).catch(() => {
+    // 用户点击了取消或关闭
   })
 }
 </script>
