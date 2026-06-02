@@ -40,13 +40,9 @@ const addPendingRequest = (config = {}) => {
 
 // 创建 axios 实例
 const service = axios.create({
-  // 开发环境：使用空 baseURL，请求走相对路径，由 Vite 代理处理
-  // 生产环境：使用完整的 API URL
+  // 开发环境：使用空 baseURL，请求走相对路径，由 Vite 代理处理; 生产环境：使用完整的 API URL
   baseURL: import.meta.env.DEV ? '/vite' : (`${import.meta.env.VITE_API_URL}/vite` || 'https://api.example.com'),
-  timeout: 15000, // 请求超时时间
-  headers: {
-    'Content-Type': 'application/json; charset=utf-8'
-  }
+  timeout: 15000 // 请求超时时间
 })
 
 // 请求拦截器

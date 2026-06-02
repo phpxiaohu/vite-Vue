@@ -1,6 +1,6 @@
 <template>
   <div class="position-stiky">
-    <div class="navbar">🍍navbar</div>
+    <div @click="toPage" class="navbar">🍍navbar</div>
     <div class="nav">
       <div class="nav-item">nav-item🍍</div>
     </div>
@@ -113,6 +113,11 @@ const isIntersecting = () => {
 
   // 监听
   hasMore.value && observer.value.observe(hasMore.value)
+}
+
+// 跳转页面
+const toPage = () => {
+  navigateTo('/petAdoption')
 }
 
 onMounted(() => {

@@ -16,6 +16,8 @@ const router = createRouter({
     { path: '/logins', name: 'logins', component: () => import('@/page/login.vue'), meta: { title: '登录' } },
     { path: '/dataScreen', name: 'dataScreen', component: () => import('@/page/DataScreen.vue'), meta: { title: '数字大屏' } },
     { path: '/errorLog', name: 'errorLog', component: () => import('@/page/ErrorLog.vue'), meta: { title: '错误日志监控' } },
+    { path: '/petAdoption', name: 'petAdoption', component: () => import('@/page/PetAdoption.vue'), meta: { title: '宠物领养' } },
+    { path: '/filePiecesUpload', name: 'filePiecesUpload', component: () => import('@/page/filePiecesUpload.vue'), meta: { title: '文件分片上传' } },
     // 捕获所有未匹配的路由，重定向到登录页
     { path: '/:pathMatch(.*)*', redirect: '/logins' },
   ],

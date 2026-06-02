@@ -5,6 +5,8 @@
       <RouterLink to="/imgPica">imgPica</RouterLink> |
       <RouterLink to="/about">About</RouterLink> |
       <RouterLink to="/positionStiky">positionStiky</RouterLink> |
+      <RouterLink to="/petAdoption">petAdoption</RouterLink> |
+      <RouterLink to="/filePiecesUpload">filePiecesUpload</RouterLink> |
       <RouterLink to="/errorLog">errorLog</RouterLink> |
       <RouterLink to="/dataScreen">dataScreen</RouterLink>
     </nav>

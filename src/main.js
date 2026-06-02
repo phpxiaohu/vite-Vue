@@ -19,7 +19,7 @@ const themeStore = useThemeStore()
 themeStore.initTheme()
 
 // 初始化错误监控
-errorMonitor.init({
+/*errorMonitor.init({
   // 错误上报接口（可选）
   // reportUrl: '/api/error/report',
 
@@ -40,7 +40,7 @@ errorMonitor.init({
     console.log('🌐 网络状态:', errorInfo.network)
     console.log('👆 最近操作:', errorInfo.userActions.slice(-3))
   }
-})
+})*/
 
 // 配置 Vue 错误处理器
 app.config.errorHandler = (err, instance, info) => {

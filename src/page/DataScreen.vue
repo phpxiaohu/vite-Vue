@@ -198,30 +198,38 @@ const initLineChart = () => {
   if (!lineChartRef.value) return
 
   lineChart = echarts.init(lineChartRef.value)
+  const mobile = isMobile()
   const option = {
     tooltip: {
       trigger: 'axis',
       backgroundColor: 'rgba(0, 0, 0, 0.8)',
       borderColor: '#00f2fe',
-      textStyle: { color: '#fff' }
+      textStyle: { color: '#fff', fontSize: mobile ? 10 : 12 }
     },
     grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      top: '10%',
+      left: mobile ? '8%' : '3%',
+      right: mobile ? '5%' : '4%',
+      bottom: mobile ? '8%' : '3%',
+      top: mobile ? '12%' : '10%',
       containLabel: true
     },
     xAxis: {
       type: 'category',
       data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.3)' } },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.7)' }
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: mobile ? 10 : 12,
+        interval: mobile ? 1 : 0 // 移动端隔一个显示一个标签
+      }
     },
     yAxis: {
       type: 'value',
       axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.3)' } },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.7)' },
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: mobile ? 10 : 12
+      },
       splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
     },
     series: [{
@@ -229,10 +237,10 @@ const initLineChart = () => {
       type: 'line',
       smooth: true,
       symbol: 'circle',
-      symbolSize: 8,
+      symbolSize: mobile ? 6 : 8,
       lineStyle: {
         color: '#00f2fe',
-        width: 3
+        width: mobile ? 2 : 3
       },
       itemStyle: {
         color: '#00f2fe',
@@ -255,23 +263,30 @@ const initPieChart = () => {
   if (!pieChartRef.value) return
 
   pieChart = echarts.init(pieChartRef.value)
+  const mobile = isMobile()
   const option = {
     tooltip: {
       trigger: 'item',
       backgroundColor: 'rgba(0, 0, 0, 0.8)',
       borderColor: '#00f2fe',
-      textStyle: { color: '#fff' }
+      textStyle: { color: '#fff', fontSize: mobile ? 10 : 12 }
     },
     legend: {
-      orient: 'vertical',
-      right: '5%',
-      top: 'center',
-      textStyle: { color: 'rgba(255, 255, 255, 0.7)' }
+      orient: mobile ? 'horizontal' : 'vertical',
+      right: mobile ? 'center' : '5%',
+      top: mobile ? 'bottom' : 'center',
+      bottom: mobile ? 0 : undefined,
+      textStyle: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: mobile ? 10 : 12
+      },
+      itemWidth: mobile ? 10 : 14,
+      itemHeight: mobile ? 10 : 14
     },
     series: [{
       type: 'pie',
-      radius: ['40%', '70%'],
-      center: ['35%', '50%'],
+      radius: mobile ? ['35%', '60%'] : ['40%', '70%'],
+      center: mobile ? ['50%', '45%'] : ['35%', '50%'],
       avoidLabelOverlap: false,
       itemStyle: {
         borderRadius: 10,
@@ -284,7 +299,7 @@ const initPieChart = () => {
       emphasis: {
         label: {
           show: true,
-          fontSize: 16,
+          fontSize: mobile ? 14 : 16,
           fontWeight: 'bold',
           color: '#fff'
         }
@@ -306,36 +321,44 @@ const initBarChart = () => {
   if (!barChartRef.value) return
 
   barChart = echarts.init(barChartRef.value)
+  const mobile = isMobile()
   const option = {
     tooltip: {
       trigger: 'axis',
       backgroundColor: 'rgba(0, 0, 0, 0.8)',
       borderColor: '#00f2fe',
-      textStyle: { color: '#fff' }
+      textStyle: { color: '#fff', fontSize: mobile ? 10 : 12 }
     },
     grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      top: '10%',
+      left: mobile ? '8%' : '3%',
+      right: mobile ? '5%' : '4%',
+      bottom: mobile ? '8%' : '3%',
+      top: mobile ? '12%' : '10%',
       containLabel: true
     },
     xAxis: {
       type: 'category',
       data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
       axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.3)' } },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.7)' }
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: mobile ? 10 : 12,
+        interval: mobile ? 1 : 0
+      }
     },
     yAxis: {
       type: 'value',
       axisLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.3)' } },
-      axisLabel: { color: 'rgba(255, 255, 255, 0.7)' },
+      axisLabel: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: mobile ? 10 : 12
+      },
       splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.1)' } }
     },
     series: [{
       data: [320, 332, 301, 334, 390, 330, 320],
       type: 'bar',
-      barWidth: '40%',
+      barWidth: mobile ? '50%' : '40%',
       itemStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: '#00f2fe' },
@@ -423,6 +446,7 @@ const initMapChart = async () => {
   if (!mapChartRef.value) return
 
   mapChart = echarts.init(mapChartRef.value)
+  const mobile = isMobile()
 
   try {
     // 获取中国地图 JSON 数据
@@ -440,7 +464,7 @@ const initMapChart = async () => {
         trigger: 'item',
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
         borderColor: '#00f2fe',
-        textStyle: { color: '#fff' },
+        textStyle: { color: '#fff', fontSize: mobile ? 10 : 12 },
         formatter: function(params) {
           if (params.seriesType === 'effectScatter') {
             return `${params.name}<br/>数值: ${params.value[2]}`
@@ -450,19 +474,20 @@ const initMapChart = async () => {
       },
       geo: {
         map: 'china',
-        roam: true,
-        zoom: 1.2,
+        roam: !mobile, // 移动端禁用拖拽缩放，避免误操作
+        zoom: mobile ? 1 : 1.2,
         itemStyle: {
           areaColor: 'rgba(0, 20, 40, 0.6)',
           borderColor: '#00f2fe',
-          borderWidth: 1.5,
+          borderWidth: mobile ? 1 : 1.5,
           shadowColor: 'rgba(0, 242, 254, 0.5)',
           shadowBlur: 15
         },
         emphasis: {
           label: {
             show: true,
-            color: '#fff'
+            color: '#fff',
+            fontSize: mobile ? 10 : 12
           },
           itemStyle: {
             areaColor: 'rgba(0, 242, 254, 0.2)',
@@ -484,7 +509,7 @@ const initMapChart = async () => {
             period: 6,
             trailLength: 0.7,
             color: '#00f2fe',
-            symbolSize: 3
+            symbolSize: mobile ? 2 : 3
           },
           lineStyle: {
             color: '#b9fcff',
@@ -503,11 +528,11 @@ const initMapChart = async () => {
             period: 6,
             trailLength: 0,
             symbol: 'arrow',
-            symbolSize: 6
+            symbolSize: mobile ? 4 : 6
           },
           lineStyle: {
             color: '#00f2fe',
-            width: 1,
+            width: mobile ? 0.5 : 1,
             opacity: 0.6,
             curveness: 0.2
           },
@@ -521,7 +546,7 @@ const initMapChart = async () => {
           zlevel: 2,
           rippleEffect: {
             brushType: 'stroke',
-            scale: 4
+            scale: mobile ? 3 : 4
           },
           emphasis: {
             label: {
@@ -529,11 +554,11 @@ const initMapChart = async () => {
               position: 'right',
               formatter: '{b}',
               color: '#fff',
-              fontSize: 12
+              fontSize: mobile ? 10 : 12
             }
           },
           symbolSize: function (val) {
-            return val[2] / 80
+            return val[2] / (mobile ? 100 : 80)
           },
           itemStyle: {
             color: '#43e97b',
@@ -556,7 +581,7 @@ const initMapChart = async () => {
         top: 'center',
         textStyle: {
           color: '#fff',
-          fontSize: 16
+          fontSize: mobile ? 14 : 16
         }
       }
     })
@@ -568,6 +593,7 @@ const initGaugeChart = () => {
   if (!gaugeChartRef.value) return
 
   gaugeChart = echarts.init(gaugeChartRef.value)
+  const mobile = isMobile()
   const option = {
     series: [{
       type: 'gauge',
@@ -576,11 +602,11 @@ const initGaugeChart = () => {
       min: 0,
       max: 100,
       splitNumber: 5, // 仪表盘刻度轴分割成的段数
-      radius: '120%',
-      center: ['50%', '80%'],
+      radius: mobile ? '100%' : '120%',
+      center: ['50%', mobile ? '75%' : '80%'],
       progress: {
         show: true,
-        width: 20,
+        width: mobile ? 15 : 20,
         itemStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
             { offset: 0, color: '#43e97b' },
@@ -592,7 +618,7 @@ const initGaugeChart = () => {
       pointer: {
         icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
         length: '12%',
-        width: 20,
+        width: mobile ? 15 : 20,
         offsetCenter: [0, '-60%'],
         itemStyle: {
           color: 'auto'
@@ -601,13 +627,13 @@ const initGaugeChart = () => {
       // 仪表盘轴线
       axisLine: {
         lineStyle: {
-          width: 18,
+          width: mobile ? 14 : 18,
           color: [[1, 'rgba(255, 255, 255, 0.1)']]
         }
       },
       // 仪表盘刻度
       axisTick: {
-        length: 12,
+        length: mobile ? 10 : 12,
         lineStyle: {
           color: 'auto',
           width: 2
@@ -615,27 +641,27 @@ const initGaugeChart = () => {
       },
       // 仪表盘分隔线
       splitLine: {
-        length: 20,
+        length: mobile ? 15 : 20,
         lineStyle: {
           color: 'auto',
-          width: 5
+          width: mobile ? 4 : 5
         }
       },
       // 仪表盘标签
       axisLabel: {
         color: 'rgba(255, 255, 255, 0.7)',
-        fontSize: 12,
+        fontSize: mobile ? 10 : 12,
         distance: -50
       },
       // 仪表盘标题
       title: {
         offsetCenter: [0, '-30%'],
-        fontSize: 16,
+        fontSize: mobile ? 14 : 16,
         color: 'rgba(255, 255, 255, 0.9)'
       },
       // 仪表盘数值
       detail: {
-        fontSize: 30,
+        fontSize: mobile ? 24 : 30,
         offsetCenter: [0, '0%'],
         valueAnimation: true,
         formatter: '{value}%',
@@ -693,20 +719,46 @@ const debounce = (fn, delay) => {
   }
 }
 
+// 检测设备类型
+const isMobile = () => {
+  return window.innerWidth <= 768
+}
+
+// 重新初始化所有图表（用于设备类型切换时）
+const reinitCharts = () => {
+  initLineChart()
+  initPieChart()
+  initBarChart()
+  initMapChart()
+  initGaugeChart()
+}
+
+// 存储之前的设备类型，用于检测设备切换
+let previousIsMobile = false
+
 onMounted(async () => {
   updateTime()
   timer = setInterval(updateTime, 1000)
 
   await nextTick()
 
-  initLineChart()
-  initPieChart()
-  initBarChart()
-  initMapChart()
-  initGaugeChart()
+  await reinitCharts()
 
   // 监听窗口大小变化
   window.addEventListener('resize', handleResize)
+
+  // 存储之前的设备类型，用于检测设备切换
+  previousIsMobile = isMobile()
+
+  // 监听窗口大小变化以检测设备类型切换
+  window.addEventListener('resize', () => {
+    const currentIsMobile = isMobile()
+    if (currentIsMobile !== previousIsMobile) {
+      // 设备类型发生变化，重新初始化图表
+      debounce(reinitCharts, 300)()
+      previousIsMobile = currentIsMobile
+    }
+  })
 
   // 监听 main 元素宽度变化
   observeMainElement()
@@ -916,6 +968,7 @@ onUnmounted(() => {
 .map-container {
   width: 100%;
   height: 100%;
+  min-height: 590px;
   position: relative;
 }
 
@@ -1052,23 +1105,50 @@ onUnmounted(() => {
 }
 
 /* 响应式设计 */
+
+/* 平板端适配 (768px - 1400px) */
 @media (max-width: 1400px) {
   .screen-body {
     grid-template-columns: 1fr 1.2fr 1fr;
-  }
-}
-
-@media (max-width: 1200px) {
-  .screen-body {
-    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
   .screen-title {
-    font-size: 28px;
+    font-size: 30px;
+  }
+
+  .chart-container {
+    height: 180px;
+  }
+
+  .map-container {
+    min-height: 500px;
+  }
+}
+
+/* 小平板和大手机适配 (768px - 1200px) */
+@media (max-width: 1200px) {
+  .data-screen {
+    padding: 8px;
+  }
+
+  .screen-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .center-panel {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+
+  .screen-title {
+    font-size: 24px;
+    letter-spacing: 2px;
   }
 
   .header-decoration {
-    width: 150px;
+    width: 100px;
   }
 
   .screen-time {
@@ -1076,6 +1156,264 @@ onUnmounted(() => {
     transform: none;
     display: inline-block;
     margin-top: 10px;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .chart-container {
+    height: 160px;
+  }
+
+  .map-container {
+    min-height: 400px;
+  }
+
+  .stats-grid {
+    gap: 10px;
+  }
+
+  .stat-item {
+    padding: 12px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+}
+
+/* 手机端适配 (最大 768px) */
+@media (max-width: 768px) {
+  .data-screen {
+    padding: 5px;
+  }
+
+  .screen-header {
+    margin-bottom: 8px;
+  }
+
+  .screen-title {
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  .header-decoration {
+    width: 60px;
+    height: 1px;
+  }
+
+  .screen-body {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .left-panel,
+  .right-panel,
+  .center-panel {
+    gap: 6px;
+  }
+
+  /* 调整面板顺序：地图优先 */
+  .center-panel {
+    order: -1;
+  }
+
+  .panel-card {
+    border-radius: 6px;
+  }
+
+  .card-header {
+    padding: 8px 12px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  .card-content {
+    padding: 8px;
+  }
+
+  /* 统计卡片调整为单列 */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .stat-item {
+    padding: 10px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  /* 图表高度调整 */
+  .chart-container {
+    height: 180px;
+  }
+
+  .map-container {
+    min-height: 300px;
+  }
+
+  /* 排行榜优化 */
+  .ranking-item {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .ranking-rank {
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+  }
+
+  .ranking-name {
+    font-size: 13px;
+  }
+
+  .ranking-value {
+    font-size: 14px;
+    min-width: 60px;
+  }
+
+  /* 动态列表优化 */
+  .dynamic-item {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .dynamic-text {
+    font-size: 12px;
+  }
+
+  .dynamic-time {
+    font-size: 10px;
+  }
+
+  .dynamic-dot {
+    width: 6px;
+    height: 6px;
+    margin-top: 5px;
+  }
+}
+
+/* 小屏幕手机适配 (最大 480px) */
+@media (max-width: 480px) {
+  .data-screen {
+    padding: 4px;
+  }
+
+  .screen-title {
+    font-size: 18px;
+  }
+
+  .header-decoration {
+    width: 40px;
+  }
+
+  .screen-time {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .screen-body {
+    gap: 5px;
+  }
+
+  .left-panel,
+  .right-panel,
+  .center-panel {
+    gap: 5px;
+  }
+
+  .card-header {
+    padding: 6px 10px;
+  }
+
+  .card-title {
+    font-size: 13px;
+  }
+
+  .card-content {
+    padding: 6px;
+  }
+
+  /* 统计卡片保持两列但更紧凑 */
+  .stats-grid {
+    gap: 6px;
+  }
+
+  .stat-item {
+    padding: 8px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  /* 图表高度进一步调整 */
+  .chart-container {
+    height: 160px;
+  }
+
+  .map-container {
+    min-height: 250px;
+  }
+
+  /* 排行榜更紧凑 */
+  .ranking-list {
+    gap: 8px;
+  }
+
+  .ranking-item {
+    padding: 8px;
+  }
+
+  .ranking-rank {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+
+  .ranking-name {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .ranking-bar {
+    height: 4px;
+  }
+
+  .ranking-value {
+    font-size: 13px;
+    min-width: 50px;
+  }
+
+  /* 动态列表更紧凑 */
+  .dynamic-list {
+    gap: 6px;
+  }
+
+  .dynamic-item {
+    padding: 6px;
+  }
+
+  .dynamic-text {
+    font-size: 11px;
+  }
+
+  .dynamic-time {
+    font-size: 9px;
   }
 }
 </style>
