@@ -188,11 +188,11 @@ onMounted(() => {
 .fileBtn {
   position: relative;
   padding: 8px 16px;
-  border: 1px solid #409eff;
+  border: 1px solid var(--xh-primary-btn);
   border-radius: 4px;
   cursor: pointer;
-  background: #409eff;
-  color: white;
+  background: var(--xh-primary-btn);
+  color: var(--xh-text-white);
   font-size: 14px;
 }
 
@@ -216,7 +216,7 @@ onMounted(() => {
 .file-list h3 {
   margin-bottom: 10px;
   font-size: 16px;
-  color: #333;
+  color: var(--xh-text-color);
 }
 
 .file-list .table-container {
@@ -227,20 +227,20 @@ onMounted(() => {
 .file-list table {
   min-width: 100%;
   border-collapse: collapse;
-  border: 1px solid #e4e7ed;
+  border: 1px solid var(--xh-border-color);
 }
 
 .file-list th,
 .file-list td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #e4e7ed;
+  border-bottom: 1px solid var(--xh-border-color);
 }
 
 .file-list th {
-  background: #f5f7fa;
+  background: var(--xh-bg-secondary);
   font-weight: 600;
-  color: #606266;
+  color: var(--xh-text-secondary);
 }
 
 .file-list .status {
@@ -250,22 +250,22 @@ onMounted(() => {
 }
 
 .file-list .status.uploading {
-  background: #e6f7ff;
-  color: #1890ff;
+  background: var(--xh-info-light);
+  color: var(--xh-info-color);
 }
 
 .file-list .status.completed {
-  background: #f0f9eb;
-  color: #67c23a;
+  background: var(--xh-success-light);
+  color: var(--xh-success-color);
 }
 
 .file-list .status.failed {
-  background: #fef0f0;
-  color: #f56c6c;
+  background: var(--xh-error-light);
+  color: var(--xh-error-color);
 }
 
 .file-list .url-link {
-  color: #409eff;
+  color: var(--xh-primary-btn);
   text-decoration: none;
 }
 
@@ -275,20 +275,21 @@ onMounted(() => {
 
 .file-list .empty {
   text-align: center;
-  color: #909399;
+  color: var(--xh-text-light);
 }
 
 .delete-btn {
   padding: 4px 12px;
   border: none;
   border-radius: 4px;
-  background: #f56c6c;
-  color: white;
+  background: var(--xh-error-color);
+  color: var(--xh-text-white);
   cursor: pointer;
   font-size: 12px;
 }
 
 .delete-btn:hover {
-  background: #f78989;
+  background: var(--xh-error-color);
+  opacity: 0.8;
 }
 </style>

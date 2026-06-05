@@ -252,27 +252,27 @@ const handleToggleExpand = () => {
 }
 
 .tree-node-content:hover:not(.is-disabled) {
-  background-color: #f5f5f5;
+  background-color: var(--xh-bg-hover);
 }
 
 .tree-node-content:focus-visible {
-  outline: 2px solid #1890ff;
+  outline: 2px solid var(--xh-border-focus);
   outline-offset: -2px;
 }
 
 .tree-node-content.is-selected {
-  background-color: #e6f7ff;
-  color: #1890ff;
+  background-color: var(--xh-bg-active);
+  color: var(--xh-primary-accent);
 }
 
 .tree-node-content.is-disabled {
-  color: #d9d9d9;
+  color: var(--xh-text-disabled);
   cursor: not-allowed;
   opacity: 0.6;
 }
 
 .tree-node-content.is-half-checked {
-  background-color: #f0f9ff;
+  background-color: var(--xh-highlight-color);
 }
 
 /* 展开图标 */
@@ -282,7 +282,7 @@ const handleToggleExpand = () => {
   justify-content: center;
   width: 16px;
   height: 16px;
-  color: #999;
+  color: var(--xh-text-light);
   transition: transform 0.3s;
   cursor: pointer;
   margin-right: 4px;
@@ -290,7 +290,7 @@ const handleToggleExpand = () => {
 }
 
 .tree-node-expand-icon:hover {
-  color: #666;
+  color: var(--xh-text-secondary);
 }
 
 .tree-node-expand-icon.is-expanded {
@@ -322,6 +322,7 @@ const handleToggleExpand = () => {
 .tree-node-label {
   flex: 1;
   font-size: 14px;
+  color: var(--xh-text-color);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

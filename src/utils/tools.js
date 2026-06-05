@@ -143,6 +143,68 @@ class RequestHashGenerator {
   }
 }
 
+/**
+ * 防抖函数
+ * @param {Function} func - 要防抖的函数
+ * @param {number} wait - 等待时间(ms)，默认300
+ * @param {Object} [opt] - 选项
+ * @param {boolean} [opt.leading=false] - 立即执行
+ * @param {number} [opt.maxWait] - 最大等待时间
+ * @returns {Function} 防抖函数
+ */
+function debounce(func, wait = 300, opt = {}) {
+  let timer = null, lastArgs = null, lastThis = null;
+
+  const run = () => { func.apply(lastThis, lastArgs); lastArgs = lastThis = null; };
+
+  const fn = function(...args) {
+    lastArgs = args;
+    lastThis = this;
+    if (!timer) {
+      opt.leading && run();
+      const delay = opt.maxWait ? Math.min(wait, opt.maxWait) : wait;
+      timer = setTimeout(() => { run(); timer = null; }, delay);
+    } else {
+      clearTimeout(timer);
+      timer = setTimeout(() => { run(); timer = null; }, wait);
+    }
+  };
+
+  fn.cancel = () => { clearTimeout(timer); timer = lastArgs = lastThis = null; };
+  fn.flush = () => { timer && (clearTimeout(timer), run(), timer = null); };
+
+  return fn;
+}
+
+
+/**
+ * 节流函数
+ * @param {Function} func - 要节流的函数
+ * @param {number} limit - 时间限制(ms)，默认300
+ * @param {Object} [opt] - 选项
+ * @param {boolean} [opt.leading=true] - 立即执行
+ * @param {boolean} [opt.trailing=false] - 延迟执行
+ * @returns {Function} 节流函数
+ */
+function throttle(func, limit = 300, opt = {}) {
+  let last = 0, timer = null, lastArgs = null, lastThis = null;
+  const now = () => performance.now ? performance.now() : Date.now();
+
+  const run = () => { func.apply(lastThis, lastArgs); lastArgs = lastThis = timer = null; };
+
+  return function(...args) {
+    const nowTime = now();
+    if (!last || nowTime - last >= limit) {
+      opt.leading !== false && func.apply(this, args);
+      last = nowTime;
+    } else if (opt.trailing && !timer) {
+      lastArgs = args;
+      lastThis = this;
+      timer = setTimeout(() => { last = now(); run(); }, limit - (nowTime - last));
+    }
+  };
+}
+
 // 设置 cookie 值的存取和删除
 const CookieStorage = {
   // 设置 Cookie
@@ -175,5 +237,7 @@ const CookieStorage = {
 
 export {
   RequestHashGenerator,
-  CookieStorage
+  CookieStorage,
+  debounce,
+  throttle
 }

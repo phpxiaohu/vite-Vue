@@ -11,5 +11,11 @@ const { userInfo } = storeToRefs(userStore) // 保持响应式
 </script>
 
 <style scoped>
-.footer {height: 30px;background: #eee;}
+.footer {
+  height: 30px;
+  border-top: 1px solid var(--xh-bg-secondary);
+  box-shadow: 0 -1px 4px var(--xh-bg-secondary);
+  color: var(--xh-text-color);
+  background: var(--xh-bg-tertiary);
+}
 </style>

@@ -152,9 +152,9 @@ const handleConfirm = () => {
 }
 
 .messagebox-container {
-  background: #fff;
+  background: var(--xh-bg-card);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--xh-shadow-color);
   overflow: hidden;
   animation: messagebox-zoom-in 0.3s ease;
 }
@@ -164,20 +164,20 @@ const handleConfirm = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--xh-border-divider);
 }
 
 .messagebox-title {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: var(--xh-text-color);
 }
 
 .messagebox-close {
   background: none;
   border: none;
   font-size: 24px;
-  color: #999;
+  color: var(--xh-text-light);
   cursor: pointer;
   padding: 0;
   line-height: 1;
@@ -185,7 +185,7 @@ const handleConfirm = () => {
 }
 
 .messagebox-close:hover {
-  color: #333;
+  color: var(--xh-text-color);
 }
 
 .messagebox-content {
@@ -209,25 +209,25 @@ const handleConfirm = () => {
 }
 
 .messagebox-icon--success {
-  background-color: #52c41a;
+  background-color: var(--xh-success-color);
 }
 
 .messagebox-icon--error {
-  background-color: #ff4d4f;
+  background-color: var(--xh-error-color);
 }
 
 .messagebox-icon--warning {
-  background-color: #faad14;
+  background-color: var(--xh-warning-color);
 }
 
 .messagebox-icon--info {
-  background-color: #1890ff;
+  background-color: var(--xh-info-color);
 }
 
 .messagebox-message {
   flex: 1;
   font-size: 14px;
-  color: #666;
+  color: var(--xh-text-secondary);
   line-height: 1.6;
 }
 
@@ -258,23 +258,23 @@ const handleConfirm = () => {
 }
 
 .messagebox-btn-cancel {
-  background: #fff;
-  border-color: #d9d9d9;
-  color: #666;
+  background: var(--xh-bg-card);
+  border-color: var(--xh-border-color);
+  color: var(--xh-text-secondary);
 }
 
 .messagebox-btn-cancel:hover:not(:disabled) {
-  color: #1890ff;
-  border-color: #1890ff;
+  color: var(--xh-primary-accent);
+  border-color: var(--xh-primary-accent);
 }
 
 .messagebox-btn-confirm {
-  background: #1890ff;
-  color: #fff;
+  background: var(--xh-primary-accent);
+  color: var(--xh-text-white);
 }
 
 .messagebox-btn-confirm:hover:not(:disabled) {
-  background: #40a9ff;
+  background: var(--xh-primary-hover);
 }
 
 /* 动画 */

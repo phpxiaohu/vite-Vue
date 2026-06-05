@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useThemeStore = defineStore('theme', {
   state: () => ({
     currentTheme: localStorage.getItem('currentTheme') || 'default', // 默认为主题 default
-    themes: ['default', 'green', 'glory']
+    themes: ['default', 'green', 'glory', 'dark']
   }),
   getters: {
     // 获取当前主题
@@ -37,11 +37,11 @@ export const useThemeStore = defineStore('theme', {
     applyTheme() {
       // 移除所有主题类名
       this.themes.forEach(theme => {
-        document.body.classList.remove(theme)
+        document.documentElement.classList.remove(theme)
       })
 
       // 添加当前主题类名
-      document.body.classList.add(this.currentTheme)
+      document.documentElement.classList.add(this.currentTheme)
     },
 
     // 初始化主题（从本地存储设置）
@@ -55,7 +55,5 @@ export const useThemeStore = defineStore('theme', {
       // 应用初始主题
       this.applyTheme()
     }
-  },
-  // 添加持久化配置
-  // persist: true
+  }
 })

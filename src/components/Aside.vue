@@ -21,19 +21,22 @@ const toggleAside = () => {
 .aside {
   width: 200px;
   flex-shrink: 0;
-  background: #b6fd92;
+  background: var(--xh-bg-secondary);
   transition: width .25s ease;
   padding: 8px;
-  .collapse-btn {
-    width: 100%;
-    height: 34px;
-    border-radius: 6px;
-    background: #3384ee;
-    color: #fff;
-    cursor: pointer;
-  }
-  &.collapsed .collapse-btn {
-    font-size: 12px;
-  }
+}
+
+.aside .collapse-btn {
+  width: 100%;
+  height: 34px;
+  border-radius: 6px;
+  background: var(--xh-primary-color);
+  color: var(--xh-text-white);
+  cursor: pointer;
+  border: none;
+}
+
+.aside.collapsed .collapse-btn {
+  font-size: 12px;
 }
 </style>

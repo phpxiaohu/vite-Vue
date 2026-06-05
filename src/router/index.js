@@ -13,11 +13,11 @@ const router = createRouter({
     { path: '/sudoku', name: 'Sudoku', component: () => import('@/page/Sudoku.vue'), meta: { title: '数独游戏' } },
     { path: '/buyerInfo', name: 'buyerInfo', component: () => import('@/page/BuyerInfo.vue'), meta: { title: '实时消息推送' } },
     { path: '/ruleTrace', name: 'ruleTrace', component: () => import('@/page/RuleTraceView.vue'), meta: { title: '规则应用路径' } },
-    { path: '/logins', name: 'logins', component: () => import('@/page/login.vue'), meta: { title: '登录' } },
+    { path: '/logins', name: 'logins', component: () => import('@/page/Login.vue'), meta: { title: '登录' } },
     { path: '/dataScreen', name: 'dataScreen', component: () => import('@/page/DataScreen.vue'), meta: { title: '数字大屏' } },
     { path: '/errorLog', name: 'errorLog', component: () => import('@/page/ErrorLog.vue'), meta: { title: '错误日志监控' } },
     { path: '/petAdoption', name: 'petAdoption', component: () => import('@/page/PetAdoption.vue'), meta: { title: '宠物领养' } },
-    { path: '/filePiecesUpload', name: 'filePiecesUpload', component: () => import('@/page/filePiecesUpload.vue'), meta: { title: '文件分片上传' } },
+    { path: '/filePiecesUpload', name: 'filePiecesUpload', component: () => import('@/page/FilePiecesUpload.vue'), meta: { title: '文件分片上传' } },
     // 捕获所有未匹配的路由，重定向到登录页
     { path: '/:pathMatch(.*)*', redirect: '/logins' },
   ],
@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
   }
 
   // 判断用户是否登录
-  if (userStore.token.value) {
+  if (userStore?.token.value) {
     // 已登录
     if (to.path === '/logins') {
       // 访问登录页面，跳转到首页
@@ -59,7 +59,7 @@ router.beforeEach((to, from, next) => {
 })
 // 导航守卫
 router.afterEach((to, from, failure) => {
-  document.title = `${to.meta.title}-Vite-vue`
+  document.title = `${to?.meta?.title}-Vite-vue`
 })
 
 export default router

@@ -192,11 +192,11 @@ const handleSubmit = async () => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: #fff;
+  background: var(--xh-bg-card);
   width: 400px;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px var(--xh-shadow-color);
 }
 
 .login-title {
@@ -224,10 +224,13 @@ const handleSubmit = async () => {
 .login-item .input {
   flex: 1 0 auto;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--xh-border-color);
   border-radius: 4px;
+  background-color: var(--xh-bg-input);
   input {
     flex: 1 0 auto;
+    background-color: transparent;
+    color: var(--xh-text-color);
   }
 }
 
@@ -243,7 +246,7 @@ const handleSubmit = async () => {
 }
 
 .error-message {
-  color: #e74c3c;
+  color: var(--xh-error-color);
   font-size: 14px;
   margin-bottom: 10px;
   text-align: center;
@@ -251,13 +254,13 @@ const handleSubmit = async () => {
 
 button {
   padding: 10px;
-  background: var(--xh-bg-color);
-  color: white;
+  background: var(--xh-primary-btn);
+  color: var(--xh-text-white);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   &:hover {
-    background: var(--xh-bg-hover-color);
+    background: var(--xh-primary-hover);
   }
 }
 .register {

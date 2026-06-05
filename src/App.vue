@@ -21,9 +21,9 @@
 import { ref, watch } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
-import Aside from '@/components/aside.vue'
+import Aside from '@/components/Aside.vue'
 import Header from '@/components/header.vue'
-import Footer from '@/components/footer.vue'
+import Footer from '@/components/Footer.vue'
 
 const route = useRoute()
 const userStore = useUserStore() // 保持响应式

@@ -1,24 +1,21 @@
 /*重置样式*/
 @layer reset {
-  * {margin: 0;padding: 0;box-sizing: border-box;-webkit-touch-callout: none;}
+  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {margin: 0;padding: 0;font-style: normal;box-sizing: border-box;-webkit-touch-callout: none;}
   html, body {/*font-size: clamp(12px, calc(100vw / 7.5), 20px);*/width: 100%;height: 100%;-ms-text-size-adjust: 100%;text-size-adjust: 100%;-webkit-text-size-adjust: 100% !important;font-family: "Roboto", "Open Sans", "PingFang", "PingFang SC", "PingFang HK", "PingFang TC", "Microsoft YaHei", "Microsoft JhengHei", "Helvetica Neue", '\5FAE\8F6F\96C5\9ED1', Arial, '\9ED1\4F53', '\5B8B\4F53', Helvetica, sans-serif;}
-  html, body, div, ul, ol, li, dl, dt, dd, form, input, textarea, table, h1, h2, h3, h4, p, span, a, em, i, img {font-style: normal;}
   iframe, a, img {border: none;}
   img{max-width: 100%;object-fit: cover;}
   video {object-fit: fill}
-  a, a:hover, a:visited, a:active {text-decoration: none;/*color: inherit;*/-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;/*ios下点击闪现灰色半透明背景*/}
+  a, a:hover, a:visited, a:active {text-decoration: none;color: inherit;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;/*ios下点击闪现灰色半透明背景*/}
   ol, ul {list-style-type: none;}
   ul li, ol li {list-style: none;}
   h1, h2, h3 {font-weight: normal;}
   table {border-collapse: collapse;}
-  button, input, select, textarea {font: inherit;outline: none;border: none;border-radius: 0;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;/*appearance: none;*/background: none;line-height: normal;-webkit-writing-mode: horizontal-tb;resize: none;color: inherit;white-space: pre-wrap;word-wrap: break-word;-webkit-rtl-ordering: logical;user-select: text}
+  button, input, select, textarea {font: inherit;outline: none;border: none;box-sizing: border-box;border-radius: 0;-webkit-tap-highlight-color: transparent;tap-highlight-color: transparent;/*appearance: none;*/background: none;line-height: normal;-webkit-writing-mode: horizontal-tb;resize: none;color: inherit;white-space: pre-wrap;word-wrap: break-word;-webkit-rtl-ordering: logical;user-select: text}
   input::-webkit-inner-spin-button, input::-webkit-outer-spin-button, input::-webkit-search-cancel-button, input::-webkit-clear-button {-webkit-appearance: none !important;}  /*移除表单默认样式*/
   input[type=file] {position: absolute;top: 0;left: 0;bottom: 0;right: 0;opacity: 0;width: 100%;height: 100%;cursor: pointer;}
   .disabled{pointer-events: none;}
   @supports (bottom: constant(safe-area-inset-bottom)) or (bottom: env(safe-area-inset-bottom)) { body{padding-bottom: constant(safe-area-inset-bottom); padding-bottom: env(safe-area-inset-bottom);} } /* IphoneX 底部兼容 */
-  @media (prefers-color-scheme: dark) { :root{--mode-color: #111; --color-text: #333;} } /* 暗黑模式 */
-  @media (prefers-color-scheme: light) { :root{--mode-color: #213547; --color-text: #fff;} } /* 浅色模式 */
-  #app{width: 100%;height: 100%;}
+  #app{width: 100%;height: 100%;background: var(--xh-bg-active);}
 }
 /*基础样式*/
 @layer layout {

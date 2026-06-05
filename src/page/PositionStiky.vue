@@ -156,7 +156,7 @@ onUnmounted(() => {
   text-align: center;
   padding: 10px;
   font-size: 16px;
-  color: #666;
+  color: var(--xh-text-secondary);
 }
 
 .product-list {
@@ -166,23 +166,23 @@ onUnmounted(() => {
 }
 
 .product-card {
-  background: #fff;
+  background: var(--xh-bg-card);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--xh-shadow-color);
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px var(--xh-shadow-hover);
 }
 
 .product-image {
   width: 100%;
   height: 200px;
   overflow: hidden;
-  background: #f5f5f5;
+  background: var(--xh-bg-secondary);
 }
 
 .product-image img {
@@ -218,7 +218,7 @@ onUnmounted(() => {
 }
 
 .product-details {
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--xh-border-light);
   padding-top: 15px;
 }
 
@@ -232,16 +232,16 @@ onUnmounted(() => {
 .price {
   font-size: 20px;
   font-weight: bold;
-  color: #ff4d4f;
+  color: var(--xh-error-color);
 }
 
 .stock {
   font-size: 14px;
-  color: #52c41a;
+  color: var(--xh-success-color);
 }
 
 .stock.low-stock {
-  color: #ff4d4f;
+  color: var(--xh-error-color);
 }
 
 .time-info {
@@ -252,6 +252,6 @@ onUnmounted(() => {
 
 .time-info small {
   font-size: 12px;
-  color: #999;
+  color: var(--xh-text-light);
 }
 </style>

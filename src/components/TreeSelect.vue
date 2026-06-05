@@ -1,32 +1,17 @@
 <template>
   <div class="tree-select" :class="{ 'is-multiple': multiple, 'is-disabled': disabled }">
-    <!-- 搜索框 / 选中值显示 -->
+    <!-- 搜索框 -->
     <div v-if="showSearch" class="tree-search">
-      <!-- 多选模式：显示选中标签 -->
-      <div v-if="multiple && selectedKeys.length > 0" class="selected-tags">
-        <span
-          v-for="key in selectedKeys"
-          :key="key"
-          class="selected-tag"
-        >
-          {{ getNodeLabel(key) }}
-          <span class="tag-close" @click.stop="removeNode(key)">×</span>
-        </span>
-      </div>
-
-      <!-- 单选模式：显示选中值 -->
       <input
-        v-else
         v-model="searchKeyword"
         type="text"
-        :placeholder="getPlaceholder()"
+        :placeholder="searchPlaceholder"
         class="tree-search-input"
         :disabled="disabled"
         @input="handleSearchInput"
         @keydown.enter="handleSearchEnter"
       />
-
-      <span v-if="searchKeyword || (multiple && selectedKeys.length > 0)" class="tree-search-clear" @click="clearSearch" title="清空">×</span>
+      <span v-if="searchKeyword" class="tree-search-clear" @click="clearSearch" title="清空">×</span>
       <span v-if="loading" class="tree-search-loading">⏳</span>
     </div>
 
@@ -102,6 +87,7 @@
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
 import TreeNode from './TreeNode.vue'
+import { debounce } from '@/utils/tools.js'
 
 const props = defineProps({
   // 数据源
@@ -137,13 +123,14 @@ const props = defineProps({
   // 是否显示搜索框
   showSearch: {
     type: Boolean,
-    default: false
+    default: true
   },
   // 搜索框占位符
   searchPlaceholder: {
     type: String,
     default: '搜索...'
   },
+
   // 空状态文本
   emptyText: {
     type: String,
@@ -203,11 +190,6 @@ const props = defineProps({
   nodeRender: {
     type: Function,
     default: null
-  },
-  // 搜索防抖延迟
-  searchDebounce: {
-    type: Number,
-    default: 300
   }
 })
 
@@ -231,8 +213,16 @@ const halfCheckedKeys = ref([])
 // 树容器引用
 const treeContainerRef = ref(null)
 
-// 搜索定时器
-let searchTimer = null
+// 处理搜索输入（带防抖）
+const handleSearchInput = debounce(() => {
+  emit('search', searchKeyword.value)
+
+  if (searchKeyword.value) {
+    expandAllNodes(props.data)
+  } else if (!props.defaultExpandAll) {
+    collapseAllNodes()
+  }
+}, 300)
 
 // 构建搜索索引
 const buildSearchIndex = () => {
@@ -267,6 +257,91 @@ const clearCaches = () => {
   searchIndex.value = null
 }
 
+// 根据选中的keys重建树结构（只保留匹配的节点及其完整子树）
+const rebuildTreeWithKeys = (matchedKeys) => {
+  const keySet = new Set(matchedKeys)
+
+  const buildTree = (nodes) => {
+    return nodes.reduce((result, node) => {
+      const key = getNodeKey(node)
+      const children = node[props.childrenKey] || []
+
+      // 检查当前节点是否匹配
+      const isMatched = keySet.has(key)
+
+      // 如果当前节点匹配，保留该节点及其所有子节点
+      if (isMatched) {
+        result.push({
+          ...node,
+          [props.childrenKey]: children
+        })
+      } else {
+        // 如果当前节点不匹配，递归检查子节点
+        const filteredChildren = children.length ? buildTree(children) : []
+        // 如果子节点中有匹配的，保留当前节点作为父容器
+        if (filteredChildren.length) {
+          result.push({
+            ...node,
+            [props.childrenKey]: filteredChildren
+          })
+        }
+      }
+
+      return result
+    }, [])
+  }
+
+  return buildTree(props.data)
+}
+
+// 过滤后的树形数据
+const filteredTreeData = computed(() => {
+  if (!searchKeyword.value) {
+    return props.data
+  }
+
+  // 延迟构建索引
+  if (!searchIndex.value) {
+    buildSearchIndex()
+  }
+
+  const keyword = searchKeyword.value.toLowerCase()
+
+  // 快速查找匹配节点
+  const matchedKeys = []
+  searchIndex.value.forEach((info, key) => {
+    if (info.label.includes(keyword)) {
+      matchedKeys.push(key)
+    }
+  })
+
+  // 重建树结构
+  return rebuildTreeWithKeys(matchedKeys)
+})
+
+// 回车搜索
+const handleSearchEnter = () => {
+  handleSearchInput.cancel()
+  emit('search', searchKeyword.value)
+
+  if (searchKeyword.value) {
+    expandAllNodes(props.data)
+  } else if (!props.defaultExpandAll) {
+    collapseAllNodes()
+  }
+}
+
+// 清空搜索
+const clearSearch = () => {
+  searchKeyword.value = ''
+  handleSearchInput.cancel()
+  emit('search', '')
+
+  if (!props.defaultExpandAll) {
+    collapseAllNodes()
+  }
+}
+
 // 获取节点 key
 const getNodeKey = (node) => {
   return node[props.nodeKey] || node[props.labelKey]
@@ -293,105 +368,7 @@ watch(() => props.data, () => {
   updateHalfCheckedKeys()
 }, { deep: true })
 
-// 根据选中的keys重建树结构
-const rebuildTreeWithKeys = (matchedKeys) => {
-  const keySet = new Set(matchedKeys)
-  const nodeMap = getNodeMap()
 
-  const buildTree = (nodes) => {
-    return nodes.reduce((result, node) => {
-      const key = getNodeKey(node)
-      const children = node[props.childrenKey] || []
-
-      // 检查当前节点或其子节点是否匹配
-      const hasMatchInPath = nodeMap.get(key)?.pathKeys?.some(k => keySet.has(k))
-
-      if (hasMatchInPath) {
-        const filteredChildren = children.length > 0 ? buildTree(children) : []
-        result.push({
-          ...node,
-          [props.childrenKey]: filteredChildren
-        })
-      }
-
-      return result
-    }, [])
-  }
-
-  return buildTree(props.data)
-}
-
-// 过滤后的树形数据（优化：使用索引加速）
-const filteredTreeData = computed(() => {
-  if (!searchKeyword.value) {
-    return props.data
-  }
-
-  // 延迟构建索引
-  if (!searchIndex.value) {
-    buildSearchIndex()
-  }
-
-  const keyword = searchKeyword.value.toLowerCase()
-
-  // 快速查找匹配节点
-  const matchedKeys = []
-  searchIndex.value.forEach((info, key) => {
-    if (info.label.includes(keyword)) {
-      matchedKeys.push(key)
-    }
-  })
-
-  // 重建树结构
-  return rebuildTreeWithKeys(matchedKeys)
-})
-
-// 处理搜索输入（带防抖）
-const handleSearchInput = () => {
-  if (searchTimer) {
-    clearTimeout(searchTimer)
-  }
-
-  searchTimer = setTimeout(() => {
-    performSearch()
-  }, props.searchDebounce)
-}
-
-// 执行搜索
-const performSearch = () => {
-  emit('search', searchKeyword.value)
-
-  // 搜索时自动展开所有节点
-  if (searchKeyword.value) {
-    expandAllNodes(props.data)
-  } else {
-    // 清空搜索时折叠所有节点
-    if (!props.defaultExpandAll) {
-      collapseAllNodes()
-    }
-  }
-}
-
-// 回车搜索
-const handleSearchEnter = () => {
-  if (searchTimer) {
-    clearTimeout(searchTimer)
-    performSearch()
-  }
-}
-
-// 清空搜索
-const clearSearch = () => {
-  searchKeyword.value = ''
-  if (searchTimer) {
-    clearTimeout(searchTimer)
-  }
-  emit('search', '')
-
-  if (!props.defaultExpandAll) {
-    collapseAllNodes()
-  }
-}
 
 // 根据 key 获取节点名称
 const getNodeLabel = (key) => {
@@ -417,17 +394,6 @@ const removeNode = (key) => {
     emit('update:modelValue', [...selectedKeys.value])
     emit('change', [...selectedKeys.value], null)
   }
-}
-
-// 获取占位符文本
-const getPlaceholder = () => {
-  // 单选模式下，显示选中值作为占位符（让用户知道当前选中状态）
-  if (!props.multiple && selectedKeys.value.length > 0) {
-    const label = getNodeLabel(selectedKeys.value[0])
-    return label || props.searchPlaceholder
-  }
-  // 多选模式或未选中时，显示搜索提示
-  return props.searchPlaceholder
 }
 
 // 展开所有节点
@@ -884,9 +850,7 @@ defineExpose({
   // 清空搜索关键词
   clearSearch: () => {
     searchKeyword.value = ''
-    if (searchTimer) {
-      clearTimeout(searchTimer)
-    }
+    handleSearchInput.cancel()
     emit('search', '')
   },
   // 滚动到指定节点
@@ -908,18 +872,18 @@ defineExpose({
 <style scoped>
 .tree-select {
   width: 100%;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--xh-border-color);
   border-radius: 4px;
-  background-color: #fff;
+  background-color: var(--xh-bg-color);
   transition: border-color 0.3s;
 }
 
 .tree-select:hover:not(.is-disabled) {
-  border-color: #40a9ff;
+  border-color: var(--xh-primary-hover);
 }
 
 .tree-select.is-disabled {
-  background-color: #f5f5f5;
+  background-color: var(--xh-bg-disabled);
   cursor: not-allowed;
 }
 
@@ -930,26 +894,28 @@ defineExpose({
 /* 搜索框 */
 .tree-search {
   padding: 8px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--xh-border-divider);
   position: relative;
 }
 
 .tree-search-input {
   width: 100%;
   padding: 6px 30px 6px 10px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--xh-border-input);
   border-radius: 4px;
   font-size: 14px;
   outline: none;
   transition: border-color 0.3s;
+  background-color: var(--xh-bg-input);
+  color: var(--xh-text-color);
 }
 
 .tree-search-input:focus {
-  border-color: #1890ff;
+  border-color: var(--xh-border-focus);
 }
 
 .tree-search-input:disabled {
-  background-color: #f5f5f5;
+  background-color: var(--xh-bg-disabled);
   cursor: not-allowed;
 }
 
@@ -960,13 +926,13 @@ defineExpose({
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #999;
+  color: var(--xh-text-light);
   font-size: 18px;
   line-height: 1;
 }
 
 .tree-search-clear:hover {
-  color: #666;
+  color: var(--xh-text-secondary);
 }
 
 .tree-search-loading {
@@ -982,8 +948,8 @@ defineExpose({
 /* 全选按钮 */
 .tree-select-all {
   padding: 8px 12px;
-  border-bottom: 1px solid #f0f0f0;
-  background-color: #fafafa;
+  border-bottom: 1px solid var(--xh-border-divider);
+  background-color: var(--xh-bg-tertiary);
 }
 
 .select-all-label {
@@ -1012,7 +978,7 @@ defineExpose({
 .tree-loading {
   padding: 40px 20px;
   text-align: center;
-  color: #999;
+  color: var(--xh-text-light);
   font-size: 14px;
   display: flex;
   flex-direction: column;
@@ -1029,7 +995,7 @@ defineExpose({
 .tree-empty {
   padding: 40px 20px;
   text-align: center;
-  color: #999;
+  color: var(--xh-text-light);
   font-size: 14px;
 }
 
@@ -1047,15 +1013,15 @@ defineExpose({
 /* 底部统计 */
 .tree-summary {
   padding: 8px 12px;
-  border-top: 1px solid #f0f0f0;
-  background-color: #fafafa;
+  border-top: 1px solid var(--xh-border-divider);
+  background-color: var(--xh-bg-tertiary);
   font-size: 13px;
-  color: #666;
+  color: var(--xh-text-secondary);
   text-align: right;
 }
 
 .tree-summary strong {
-  color: #1890ff;
+  color: var(--xh-primary-accent);
   font-weight: 600;
 }
 
@@ -1066,13 +1032,13 @@ defineExpose({
 }
 
 .tree-container::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--xh-shadow-color);
   border-radius: 3px;
   transition: background-color 0.3s;
 }
 
 .tree-container::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--xh-shadow-hover);
 }
 
 .tree-container::-webkit-scrollbar-track {
@@ -1081,7 +1047,7 @@ defineExpose({
 
 /* 无障碍焦点样式 */
 .tree-container:focus {
-  outline: 2px solid #1890ff;
+  outline: 2px solid var(--xh-border-focus);
   outline-offset: -2px;
 }
 </style>

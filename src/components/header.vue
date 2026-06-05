@@ -1,5 +1,5 @@
 <template>
-  <header class="flex shrink justify header">
+  <header class="flex shrink centerv justify header">
     <nav>
       <RouterLink to="/"> Home</RouterLink> |
       <RouterLink to="/imgPica">imgPica</RouterLink> |
@@ -59,5 +59,10 @@ const handleLogout = () => {
 </script>
 
 <style scoped>
-.header {height: 40px;background: var(--xh-bg-color)}
+.header {
+  height: 40px;
+  color: var(--xh-text-color);
+  border-bottom: 1px solid var(--xh-border-color);
+  background: var(--xh-bg-color);
+}
 </style>

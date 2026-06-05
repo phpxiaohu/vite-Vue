@@ -12,7 +12,6 @@
         node-key="id"
         label-key="name"
         children-key="children"
-        style="width: 300px;"
       />
       <p>选中值: {{ singleValue }}</p>
     </div>
@@ -30,7 +29,6 @@
         node-key="id"
         label-key="name"
         children-key="children"
-        style="width: 400px;"
       />
       <p>选中值: {{ JSON.stringify(multipleValue) }}</p>
     </div>
@@ -46,7 +44,6 @@
         node-key="id"
         label-key="name"
         children-key="children"
-        style="width: 300px;"
       />
       <p>选中值: {{ searchValue }}</p>
     </div>
@@ -61,7 +58,6 @@
         node-key="id"
         label-key="name"
         children-key="children"
-        style="width: 300px;"
       />
       <p>选中值: {{ expandValue }}</p>
     </div>
@@ -76,7 +72,6 @@
         node-key="id"
         label-key="name"
         children-key="children"
-        style="width: 300px;"
       />
       <p>选中值: {{ disabledValue }}</p>
     </div>
@@ -92,7 +87,6 @@
         node-key="id"
         label-key="name"
         children-key="children"
-        style="width: 300px;"
       />
       <p>选中值: {{ strictValue }}</p>
     </div>
@@ -106,7 +100,6 @@
         node-key="key"
         label-key="title"
         children-key="nodes"
-        style="width: 300px;"
       />
       <p>选中值: {{ customValue }}</p>
     </div>
@@ -122,7 +115,6 @@
         node-key="id"
         label-key="name"
         children-key="children"
-        style="width: 300px;"
       />
       <div class="button-group">
         <button @click="handleGetSelected">获取选中节点</button>
@@ -265,27 +257,27 @@ const handleClearSearch = () => {
 
 .tree-select-demo h2 {
   margin-bottom: 30px;
-  color: #333;
-  border-bottom: 2px solid #1890ff;
+  color: var(--xh-text-color);
+  border-bottom: 2px solid var(--xh-primary-accent);
   padding-bottom: 10px;
 }
 
 .demo-section {
   margin-bottom: 40px;
   padding: 20px;
-  background: #f9f9f9;
+  background: var(--xh-bg-secondary);
   border-radius: 8px;
 }
 
 .demo-section h3 {
   margin-bottom: 15px;
-  color: #666;
+  color: var(--xh-text-secondary);
   font-size: 16px;
 }
 
 .demo-section p {
   margin-top: 10px;
-  color: #999;
+  color: var(--xh-text-light);
   font-size: 14px;
 }
 
@@ -293,19 +285,20 @@ const handleClearSearch = () => {
   margin-top: 10px;
   display: flex;
   gap: 10px;
+  color: var(--xh-text-color);
 }
 
 .button-group button {
   padding: 6px 16px;
-  border: 1px solid #d9d9d9;
-  background: #fff;
+  border: 1px solid var(--xh-border-color);
+  background: var(--xh-bg-color);
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .button-group button:hover {
-  color: #1890ff;
-  border-color: #1890ff;
+  color: var(--xh-primary-accent);
+  border-color: var(--xh-primary-accent);
 }
 </style>

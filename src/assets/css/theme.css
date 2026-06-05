@@ -1,17 +1,235 @@
-:root {
-  .default {
-    --xh-bg-color: #3384ee;
-    --xh-bg-hover-color: #9ccaf8;
-    --xh-text-color: #504a4a;
-  }
-  .green {
-    --xh-bg-color: #73c448;
-    --xh-bg-hover-color: #b4f6a4;
-    --xh-text-color: #aa44fd;
-  }
-  .glory {
-    --xh-bg-color: #dbae58;
-    --xh-bg-hover-color: #f6d596;
-    --xh-text-color: #6ec4ab;
-  }
+/* 默认主题 */
+:root.default {
+  /* ============ 基础颜色 ============ */
+  --xh-primary-color: #3384ee;
+  --xh-primary-light: #66a3ff;
+  --xh-primary-dark: #256bc7;
+  --xh-primary-accent: #1890ff;
+  --xh-primary-hover: #40a9ff;
+  --xh-primary-btn: #409eff;
+
+  /* ============ 背景颜色 ============ */
+  --xh-bg-color: #cdcdcd;
+  --xh-bg-secondary: #f5f5f5;
+  --xh-bg-tertiary: #fafafa;
+  --xh-bg-hover: #f0f9ff;
+  --xh-bg-active: #e6f7ff;
+  --xh-bg-card: #ffffff;
+  --xh-bg-disabled: #f5f5f5;
+  --xh-bg-input: #ffffff;
+
+  /* ============ 文字颜色 ============ */
+  --xh-text-color: #333333;
+  --xh-text-secondary: #666666;
+  --xh-text-light: #999999;
+  --xh-text-disabled: #cccccc;
+  --xh-text-white: #ffffff;
+  --xh-text-muted: #808080;
+  --xh-text-placeholder: #999999;
+
+  /* ============ 边框颜色 ============ */
+  --xh-border-color: #d9d9d9;
+  --xh-border-light: #f0f0f0;
+  --xh-border-lighter: #e8e8e8;
+  --xh-border-focus: #1890ff;
+  --xh-border-input: #d9d9d9;
+  --xh-border-divider: #f0f0f0;
+
+  /* ============ 状态颜色 ============ */
+  --xh-success-color: #52c41a;
+  --xh-success-light: #d9f7be;
+  --xh-error-color: #ff4d4f;
+  --xh-error-light: #fff2f0;
+  --xh-warning-color: #faad14;
+  --xh-warning-light: #fff7e6;
+  --xh-info-color: #1890ff;
+  --xh-info-light: #e6f7ff;
+
+  /* ============ 阴影颜色 ============ */
+  --xh-shadow-color: rgba(0, 0, 0, 0.1);
+  --xh-shadow-light: rgba(0, 0, 0, 0.05);
+  --xh-shadow-hover: rgba(0, 0, 0, 0.15);
+
+  /* ============ 交互颜色 ============ */
+  --xh-hover-color: #40a9ff;
+  --xh-selected-color: #1890ff;
+  --xh-active-color: #1890ff;
+  --xh-highlight-color: #e6f7ff;
+}
+
+/* Green 主题 */
+:root.green {
+  /* ============ 基础颜色 ============ */
+  --xh-primary-color: #73c448;
+  --xh-primary-light: #a8e063;
+  --xh-primary-dark: #529b2e;
+  --xh-primary-accent: #73c448;
+  --xh-primary-hover: #95de64;
+  --xh-primary-btn: #67c23a;
+
+  /* ============ 背景颜色 ============ */
+  --xh-bg-color: #f6ffed;
+  --xh-bg-secondary: #ace9ac;
+  --xh-bg-tertiary: #f9fff9;
+  --xh-bg-hover: #d9f7be;
+  --xh-bg-active: #b4f6a4;
+  --xh-bg-card: #ffffff;
+  --xh-bg-disabled: #f6ffed;
+  --xh-bg-input: #ffffff;
+
+  /* ============ 文字颜色 ============ */
+  --xh-text-color: #262626;
+  --xh-text-secondary: #595959;
+  --xh-text-light: #8c8c8c;
+  --xh-text-disabled: #bfbfbf;
+  --xh-text-white: #ffffff;
+  --xh-text-muted: #6b8e6b;
+  --xh-text-placeholder: #8c8c8c;
+
+  /* ============ 边框颜色 ============ */
+  --xh-border-color: #b7eb8f;
+  --xh-border-light: #d9f7be;
+  --xh-border-lighter: #e8f5e9;
+  --xh-border-focus: #73c448;
+  --xh-border-input: #b7eb8f;
+  --xh-border-divider: #d9f7be;
+
+  /* ============ 状态颜色 ============ */
+  --xh-success-color: #73c448;
+  --xh-success-light: #d9f7be;
+  --xh-error-color: #ff4d4f;
+  --xh-error-light: #fff2f0;
+  --xh-warning-color: #faad14;
+  --xh-warning-light: #fff7e6;
+  --xh-info-color: #1890ff;
+  --xh-info-light: #e6f7ff;
+
+  /* ============ 阴影颜色 ============ */
+  --xh-shadow-color: rgba(115, 196, 72, 0.2);
+  --xh-shadow-light: rgba(115, 196, 72, 0.1);
+  --xh-shadow-hover: rgba(115, 196, 72, 0.25);
+
+  /* ============ 交互颜色 ============ */
+  --xh-hover-color: #95de64;
+  --xh-selected-color: #73c448;
+  --xh-active-color: #73c448;
+  --xh-highlight-color: #d9f7be;
+}
+
+/* Glory 主题 */
+:root.glory {
+  /* ============ 基础颜色 ============ */
+  --xh-primary-color: #dbae58;
+  --xh-primary-light: #f0c78a;
+  --xh-primary-dark: #c4953d;
+  --xh-primary-accent: #dbae58;
+  --xh-primary-hover: #e8c56a;
+  --xh-primary-btn: #dbae58;
+
+  /* ============ 背景颜色 ============ */
+  --xh-bg-color: #fffbe6;
+  --xh-bg-secondary: #fff7e6;
+  --xh-bg-tertiary: #fffbf0;
+  --xh-bg-hover: #fff1b8;
+  --xh-bg-active: #f6d596;
+  --xh-bg-card: #ffffff;
+  --xh-bg-disabled: #fffbe6;
+  --xh-bg-input: #ffffff;
+
+  /* ============ 文字颜色 ============ */
+  --xh-text-color: #433000;
+  --xh-text-secondary: #6ec4ab;
+  --xh-text-light: #8b7355;
+  --xh-text-disabled: #d4c4a8;
+  --xh-text-white: #ffffff;
+  --xh-text-muted: #8b7355;
+  --xh-text-placeholder: #8b7355;
+
+  /* ============ 边框颜色 ============ */
+  --xh-border-color: #ffe58f;
+  --xh-border-light: #fff1b8;
+  --xh-border-lighter: #fff5d6;
+  --xh-border-focus: #dbae58;
+  --xh-border-input: #ffe58f;
+  --xh-border-divider: #fff1b8;
+
+  /* ============ 状态颜色 ============ */
+  --xh-success-color: #52c41a;
+  --xh-success-light: #d9f7be;
+  --xh-error-color: #ff4d4f;
+  --xh-error-light: #fff2f0;
+  --xh-warning-color: #dbae58;
+  --xh-warning-light: #fffbe6;
+  --xh-info-color: #6ec4ab;
+  --xh-info-light: #e6fffb;
+
+  /* ============ 阴影颜色 ============ */
+  --xh-shadow-color: rgba(219, 174, 88, 0.2);
+  --xh-shadow-light: rgba(219, 174, 88, 0.1);
+  --xh-shadow-hover: rgba(219, 174, 88, 0.25);
+
+  /* ============ 交互颜色 ============ */
+  --xh-hover-color: #e8c56a;
+  --xh-selected-color: #dbae58;
+  --xh-active-color: #dbae58;
+  --xh-highlight-color: #fffbe6;
+}
+
+/* Dark 主题 */
+:root.dark {
+  /* ============ 基础颜色 ============ */
+  --xh-primary-color: #7c9aff;
+  --xh-primary-light: #a3b8ff;
+  --xh-primary-dark: #5a79e6;
+  --xh-primary-accent: #7c9aff;
+  --xh-primary-hover: #94adff;
+  --xh-primary-btn: #7c9aff;
+
+  /* ============ 背景颜色 ============ */
+  --xh-bg-color: #1f1f1f;
+  --xh-bg-secondary: #2d2d2d;
+  --xh-bg-tertiary: #3d3d3d;
+  --xh-bg-hover: #3d3d3d;
+  --xh-bg-active: #4d4d4d;
+  --xh-bg-card: #2d2d2d;
+  --xh-bg-disabled: #2d2d2d;
+  --xh-bg-input: #3d3d3d;
+
+  /* ============ 文字颜色 ============ */
+  --xh-text-color: #ffffff;
+  --xh-text-secondary: #b3b3b3;
+  --xh-text-light: #808080;
+  --xh-text-disabled: #595959;
+  --xh-text-white: #ffffff;
+  --xh-text-muted: #666666;
+  --xh-text-placeholder: #666666;
+
+  /* ============ 边框颜色 ============ */
+  --xh-border-color: #404040;
+  --xh-border-light: #333333;
+  --xh-border-lighter: #404040;
+  --xh-border-focus: #7c9aff;
+  --xh-border-input: #404040;
+  --xh-border-divider: #333333;
+
+  /* ============ 状态颜色 ============ */
+  --xh-success-color: #52c41a;
+  --xh-success-light: rgba(82, 196, 26, 0.2);
+  --xh-error-color: #ff4d4f;
+  --xh-error-light: rgba(255, 77, 79, 0.2);
+  --xh-warning-color: #faad14;
+  --xh-warning-light: rgba(250, 173, 20, 0.2);
+  --xh-info-color: #7c9aff;
+  --xh-info-light: rgba(124, 154, 255, 0.2);
+
+  /* ============ 阴影颜色 ============ */
+  --xh-shadow-color: rgba(0, 0, 0, 0.5);
+  --xh-shadow-light: rgba(0, 0, 0, 0.3);
+  --xh-shadow-hover: rgba(0, 0, 0, 0.6);
+
+  /* ============ 交互颜色 ============ */
+  --xh-hover-color: #94adff;
+  --xh-selected-color: #7c9aff;
+  --xh-active-color: #7c9aff;
+  --xh-highlight-color: rgba(124, 154, 255, 0.15);
 }
